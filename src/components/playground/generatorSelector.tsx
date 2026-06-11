@@ -2,7 +2,16 @@
 
 import { usePlaygroundStore, GeneratorName } from "@/lib/store/playgroundStore";
 
-const generatorNames: GeneratorName[] = ["Blob", "Wave", "Blurry Gradient"];
+const generatorNames: GeneratorName[] = [
+  "Blob",
+  "Wave",
+  "Blurry Gradient",
+  "Blob Scene",
+  "Layered Waves",
+  "Stacked Waves",
+  "Low Poly Grid",
+  "Layered Peaks",
+];
 
 export function GeneratorSelector() {
   const activeGenerator = usePlaygroundStore((s) => s.activeGenerator);
