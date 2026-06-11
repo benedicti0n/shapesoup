@@ -1,0 +1,46 @@
+{
+  "name": "@shapesoup/core",
+  "version": "0.1.0",
+  "description": "Pure TypeScript SVG generative pattern engine",
+  "license": "MIT",
+  "author": "ShapeSoup",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benedicti0n/shapesoup.git",
+    "directory": "packages/core"
+  },
+  "bugs": "https://github.com/benedicti0n/shapesoup/issues",
+  "homepage": "https://github.com/benedicti0n/shapesoup/tree/main/packages/core#readme",
+  "keywords": ["svg", "generative", "pattern", "background", "shapes"],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "sideEffects": false,
+  "files": ["dist", "README.md", "API.md", "LICENSE"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "tsup"
+  },
+  "dependencies": {
+    "culori": "^4.0.2",
+    "d3-delaunay": "^6.0.4"
+  },
+  "devDependencies": {
+    "@types/culori": "^4.0.1",
+    "@types/d3-delaunay": "^6.0.4",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}
