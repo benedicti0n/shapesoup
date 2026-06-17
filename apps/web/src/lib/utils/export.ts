@@ -39,3 +39,67 @@ export function svgToJsx(svgString: string): string {
     .replace(/flood-opacity=/g, "floodOpacity=")
     .trim();
 }
+
+export async function downloadPng(
+  svgString: string,
+  width: number,
+  height: number,
+  filename = "pattern.png",
+  scale = 2
+): Promise<void> {
+  const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+  const url = URL.createObjectURL(svgBlob);
+
+  const img = new Image();
+  await new Promise<void>((resolve, reject) => {
+    img.onload = () => resolve();
+    img.onerror = () => reject(new Error("Failed to load SVG image"));
+    img.src = url;
+  });
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width * scale;
+  canvas.height = height * scale;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Could not get canvas context");
+
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  URL.revokeObjectURL(url);
+
+  const pngUrl = canvas.toDataURL("image/png");
+  const link = document.createElement("a");
+  link.href = pngUrl;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+export function generateCssBackground(dataUri: string): string {
+  return `background-image: url("${dataUri}");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;`;
+}
+
+export function generateReactComponent(
+  dataUri: string,
+  width: number,
+  height: number
+): string {
+  return `export function ShapeSoupPattern() {
+  return (
+    <div
+      style={{
+        backgroundImage: \`url("${dataUri}")\`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+        height: "100%",
+        minHeight: "${height}px",
+      }}
+    />
+  );
+}`;
+}

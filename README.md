@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ShapeSoup
 
-## Getting Started
+A seed-based SVG generative pattern engine with a shareable web playground.
 
-First, run the development server:
+## What is ShapeSoup?
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+ShapeSoup produces deterministic, beautiful, scalable SVG backgrounds and illustrations from a config + seed string. Same config + same seed = same SVG, every time.
+
+## Monorepo Structure
+
+```
+shapesoup/
+├── apps/web/           # Next.js 16 playground
+└── packages/core/      # @shapesoup/core npm package
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Quick Start
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+## Playground Features
 
-To learn more about Next.js, take a look at the following resources:
+- **8 Generators**: Blob, Wave, Layered Waves, Stacked Waves, Blurry Gradient, Blob Scene, Low Poly Grid, Layered Peaks
+- **Shareable URLs** — every setting is reflected in the URL; share links and they restore the exact same pattern
+- **Copy Link** — copy the current shareable URL to clipboard
+- **Copy SVG** — raw SVG string
+- **Copy JSX** — React-compatible JSX
+- **Copy CSS** — `background-image` CSS snippet
+- **Copy React** — ready-to-use React component snippet
+- **Download SVG** — save as `.svg` file
+- **Download PNG** — export at 1x, 2x, or 4x scale
+- **Canvas Size** — presets + custom width/height
+- **Color Palettes** — 12 curated presets + custom picker
+- **Randomize** — new seed, or new seed + random palette
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## npm Package
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm add @shapesoup/core
+```
 
-## Deploy on Vercel
+```typescript
+import { generateBlobScene } from "@shapesoup/core";
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+const { svg, dataUri, metadata } = generateBlobScene({
+  width: 1920,
+  height: 1080,
+  seed: "hero-bg",
+  colors: ["#0f766e", "#14b8a6", "#5eead4", "#ccfbf1"],
+});
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See `packages/core/API.md` for full documentation.
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start web playground |
+| `pnpm build:core` | Build `@shapesoup/core` |
+| `pnpm build` | Build everything |
+| `pnpm test` | Run all tests |
+| `pnpm typecheck` | Type-check everything |
+
+## Tech Stack
+
+- **Core**: TypeScript, culori, d3-delaunay, tsup, vitest
+- **Web**: Next.js 16, React 19, TailwindCSS v4, Zustand
+- **Monorepo**: pnpm workspaces
+
+## License
+
+MIT

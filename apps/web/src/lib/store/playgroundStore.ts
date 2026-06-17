@@ -46,7 +46,7 @@ interface GeneratorConfigs {
 const defaultWidth = 800;
 const defaultHeight = 600;
 
-const defaultConfigs: GeneratorConfigs = {
+export const defaultConfigs: GeneratorConfigs = {
   Blob: {
     width: defaultWidth,
     height: defaultHeight,
@@ -153,6 +153,14 @@ function computeResult(
   }
 }
 
+export function createInitialResult(
+  generator: GeneratorName,
+  configs: GeneratorConfigs,
+  seed: string
+): WebGeneratorResult {
+  return computeResult(generator, configs, seed);
+}
+
 interface PlaygroundState {
   activeGenerator: GeneratorName;
   configs: GeneratorConfigs;
@@ -160,6 +168,9 @@ interface PlaygroundState {
   result: WebGeneratorResult | null;
   copiedSvg: boolean;
   copiedJsx: boolean;
+  copiedLink: boolean;
+  copiedCss: boolean;
+  copiedReact: boolean;
 
   setActiveGenerator: (name: GeneratorName) => void;
   updateConfig: <K extends GeneratorName>(
@@ -173,6 +184,14 @@ interface PlaygroundState {
   regenerate: () => void;
   setCopiedSvg: (value: boolean) => void;
   setCopiedJsx: (value: boolean) => void;
+  setCopiedLink: (value: boolean) => void;
+  setCopiedCss: (value: boolean) => void;
+  setCopiedReact: (value: boolean) => void;
+  hydrate: (partial: {
+    activeGenerator?: GeneratorName;
+    seed?: string;
+    configs?: Partial<GeneratorConfigs>;
+  }) => void;
 }
 
 export const usePlaygroundStore = create<PlaygroundState>((set, get) => ({
@@ -182,6 +201,9 @@ export const usePlaygroundStore = create<PlaygroundState>((set, get) => ({
   result: computeResult("Blob", structuredClone(defaultConfigs), generateRandomSeed()),
   copiedSvg: false,
   copiedJsx: false,
+  copiedLink: false,
+  copiedCss: false,
+  copiedReact: false,
 
   setActiveGenerator: (name) => {
     const { configs, seed } = get();
@@ -190,6 +212,9 @@ export const usePlaygroundStore = create<PlaygroundState>((set, get) => ({
       result: computeResult(name, configs, seed),
       copiedSvg: false,
       copiedJsx: false,
+      copiedLink: false,
+      copiedCss: false,
+      copiedReact: false,
     });
   },
 
@@ -204,6 +229,9 @@ export const usePlaygroundStore = create<PlaygroundState>((set, get) => ({
       result: computeResult(get().activeGenerator, newConfigs, seed),
       copiedSvg: false,
       copiedJsx: false,
+      copiedLink: false,
+      copiedCss: false,
+      copiedReact: false,
     });
   },
 
@@ -214,6 +242,9 @@ export const usePlaygroundStore = create<PlaygroundState>((set, get) => ({
       result: computeResult(activeGenerator, configs, seed),
       copiedSvg: false,
       copiedJsx: false,
+      copiedLink: false,
+      copiedCss: false,
+      copiedReact: false,
     });
   },
 
@@ -225,6 +256,9 @@ export const usePlaygroundStore = create<PlaygroundState>((set, get) => ({
       result: computeResult(activeGenerator, configs, newSeed),
       copiedSvg: false,
       copiedJsx: false,
+      copiedLink: false,
+      copiedCss: false,
+      copiedReact: false,
     });
   },
 
@@ -248,6 +282,9 @@ export const usePlaygroundStore = create<PlaygroundState>((set, get) => ({
       result: computeResult(activeGenerator, newConfigs, newSeed),
       copiedSvg: false,
       copiedJsx: false,
+      copiedLink: false,
+      copiedCss: false,
+      copiedReact: false,
     });
   },
 
@@ -266,6 +303,9 @@ export const usePlaygroundStore = create<PlaygroundState>((set, get) => ({
       result: computeResult(activeGenerator, newConfigs, seed),
       copiedSvg: false,
       copiedJsx: false,
+      copiedLink: false,
+      copiedCss: false,
+      copiedReact: false,
     });
   },
 
@@ -278,4 +318,31 @@ export const usePlaygroundStore = create<PlaygroundState>((set, get) => ({
 
   setCopiedSvg: (value) => set({ copiedSvg: value }),
   setCopiedJsx: (value) => set({ copiedJsx: value }),
+  setCopiedLink: (value) => set({ copiedLink: value }),
+  setCopiedCss: (value) => set({ copiedCss: value }),
+  setCopiedReact: (value) => set({ copiedReact: value }),
+
+  hydrate: (partial) => {
+    const current = get();
+    const nextGenerator = partial.activeGenerator ?? current.activeGenerator;
+    const nextSeed = partial.seed ?? current.seed;
+    const nextConfigs = partial.configs
+      ? ({
+          ...current.configs,
+          ...Object.fromEntries(
+            Object.entries(partial.configs).map(([k, v]) => [
+              k,
+              { ...current.configs[k as GeneratorName], ...v },
+            ])
+          ),
+        } as GeneratorConfigs)
+      : current.configs;
+
+    set({
+      activeGenerator: nextGenerator,
+      seed: nextSeed,
+      configs: nextConfigs,
+      result: computeResult(nextGenerator, nextConfigs, nextSeed),
+    });
+  },
 }));

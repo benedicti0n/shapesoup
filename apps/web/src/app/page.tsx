@@ -1,13 +1,19 @@
 "use client";
 
+import { Suspense } from "react";
 import { GeneratorSelector } from "@/components/playground/generatorSelector";
 import { LivePreview } from "@/components/playground/livePreview";
 import { ControlsSidebar } from "@/components/playground/controlsSidebar";
 import { ActionBar } from "@/components/playground/actionBar";
+import { UrlSync } from "@/components/playground/urlSync";
 
 export default function Home() {
   return (
     <div className="flex flex-col h-screen bg-zinc-50 dark:bg-zinc-950">
+      <Suspense fallback={null}>
+        <UrlSync />
+      </Suspense>
+
       <header className="flex items-center justify-between px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
         <h1 className="text-lg font-bold text-zinc-900 dark:text-white tracking-tight">
           ShapeSoup
