@@ -37,7 +37,7 @@ jobs:
         run: pnpm typecheck
 
       - name: Test
-        run: pnpm exec vitest run
+        run: pnpm --filter @shapesoup/core test
 
       - name: Publish to npm
         run: pnpm --filter @shapesoup/core publish --no-git-checks --access public
