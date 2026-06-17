@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Kalam, Patrick_Hand } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const kalam = Kalam({
@@ -70,6 +71,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-body">
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
