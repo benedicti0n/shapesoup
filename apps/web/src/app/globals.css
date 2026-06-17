@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #fdfbf7;
+  --pencil: #2d2d2d;
+  --muted: #e5e0d8;
+  --accent: #ff4d4d;
+  --blue-pen: #2d5da1;
+  --post-it: #fff9c4;
+  --border: #2d2d2d;
+
+  --background: var(--paper);
+  --foreground: var(--pencil);
+
+  --font-heading: var(--font-kalam), "Kalam", cursive;
+  --font-body: var(--font-patrick-hand), "Patrick Hand", cursive;
+
+  --wobbly-sm: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --wobbly-md: 15px 225px 15px 255px / 255px 15px 225px 15px;
+  --wobbly-lg: 225px 15px 255px 15px / 15px 255px 15px 225px;
+
+  --shadow-hard: 4px 4px 0px 0px var(--pencil);
+  --shadow-hard-sm: 2px 2px 0px 0px var(--pencil);
+  --shadow-hard-lg: 8px 8px 0px 0px var(--pencil);
+  --shadow-card: 3px 3px 0px 0px rgba(45, 45, 45, 0.1);
 }
 
 @theme inline {
+  --color-paper: var(--paper);
+  --color-pencil: var(--pencil);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-blue-pen: var(--blue-pen);
+  --color-post-it: var(--post-it);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--paper);
+  background-image: radial-gradient(var(--muted) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--pencil);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* Hand-drawn scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper);
+  border-left: 2px solid var(--pencil);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border: 2px solid var(--pencil);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Range input styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: var(--muted);
+  border: 2px solid var(--pencil);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--paper);
+  border: 2px solid var(--pencil);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px 0px var(--pencil);
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: var(--accent);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--paper);
+  border: 2px solid var(--pencil);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px 0px var(--pencil);
+}
+
+/* Color input styling */
+input[type="color"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 2px solid var(--pencil);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  padding: 2px;
+  background: var(--paper);
+  cursor: pointer;
+  box-shadow: 2px 2px 0px 0px var(--pencil);
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--pencil);
+  border-radius: 4px 8px 6px 10px / 10px 6px 8px 4px;
+  background: var(--paper);
+  cursor: pointer;
+  position: relative;
+}
+input[type="checkbox"]:checked {
+  background: var(--accent);
+}
+input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 11px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Select styling */
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232d2d2d' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 32px;
 }

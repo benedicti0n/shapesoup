@@ -27,6 +27,21 @@ import {
   generateNoiseGrid,
   generateBauhausPattern,
 } from "@shapesoup/core";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Link01Icon,
+  Svg01Icon,
+  CodeIcon,
+  CssThreeIcon,
+  ReactIcon,
+  Download04Icon,
+  Image02Icon,
+  PackageIcon,
+  Motion01Icon,
+} from "@hugeicons/core-free-icons";
+
+const wobblyRadius = "255px 15px 225px 15px / 15px 225px 15px 255px";
+const wobblyRadiusMd = "15px 225px 15px 255px / 255px 15px 225px 15px";
 
 export function ActionBar() {
   const result = usePlaygroundStore((s) => s.result);
@@ -129,56 +144,56 @@ export function ActionBar() {
       const items: { filename: string; content: string }[] = [];
       const config = configs[activeGenerator];
 
-        for (let i = 0; i < batchCount; i++) {
-          const seed = Math.random().toString(36).substring(2, 10);
-          let output;
-          switch (activeGenerator) {
-            case "Blob":
-              output = generateBlob({ ...config, seed });
-              break;
-            case "Wave":
-              output = generateWave({ ...config, seed });
-              break;
-            case "Blurry Gradient":
-              output = generateBlurryGradient({ ...config, seed });
-              break;
-            case "Blob Scene":
-              output = generateBlobScene({ ...config, seed });
-              break;
-            case "Layered Waves":
-              output = generateLayeredWaves({ ...config, seed });
-              break;
-            case "Stacked Waves":
-              output = generateStackedWaves({ ...config, seed });
-              break;
-            case "Low Poly Grid":
-              output = generateLowPolyGrid({ ...config, seed });
-              break;
-            case "Layered Peaks":
-              output = generateLayeredPeaks({ ...config, seed });
-              break;
-            case "Topographic Lines":
-              output = generateTopoLines({ ...config, seed });
-              break;
-            case "Dot Matrix":
-              output = generateDotMatrix({ ...config, seed });
-              break;
-            case "Mesh Gradient":
-              output = generateMeshGradient({ ...config, seed });
-              break;
-            case "Noise Grid":
-              output = generateNoiseGrid({ ...config, seed });
-              break;
-            case "Bauhaus Pattern":
-              output = generateBauhausPattern({ ...config, seed });
-              break;
-          }
-          if (!output) continue;
-          items.push({
-            filename: `${activeGenerator.toLowerCase().replace(/\s+/g, "-")}-${seed}.svg`,
-            content: output.svg,
-          });
+      for (let i = 0; i < batchCount; i++) {
+        const seed = Math.random().toString(36).substring(2, 10);
+        let output;
+        switch (activeGenerator) {
+          case "Blob":
+            output = generateBlob({ ...config, seed });
+            break;
+          case "Wave":
+            output = generateWave({ ...config, seed });
+            break;
+          case "Blurry Gradient":
+            output = generateBlurryGradient({ ...config, seed });
+            break;
+          case "Blob Scene":
+            output = generateBlobScene({ ...config, seed });
+            break;
+          case "Layered Waves":
+            output = generateLayeredWaves({ ...config, seed });
+            break;
+          case "Stacked Waves":
+            output = generateStackedWaves({ ...config, seed });
+            break;
+          case "Low Poly Grid":
+            output = generateLowPolyGrid({ ...config, seed });
+            break;
+          case "Layered Peaks":
+            output = generateLayeredPeaks({ ...config, seed });
+            break;
+          case "Topographic Lines":
+            output = generateTopoLines({ ...config, seed });
+            break;
+          case "Dot Matrix":
+            output = generateDotMatrix({ ...config, seed });
+            break;
+          case "Mesh Gradient":
+            output = generateMeshGradient({ ...config, seed });
+            break;
+          case "Noise Grid":
+            output = generateNoiseGrid({ ...config, seed });
+            break;
+          case "Bauhaus Pattern":
+            output = generateBauhausPattern({ ...config, seed });
+            break;
         }
+        if (!output) continue;
+        items.push({
+          filename: `${activeGenerator.toLowerCase().replace(/\s+/g, "-")}-${seed}.svg`,
+          content: output.svg,
+        });
+      }
 
       await downloadBatchZip(items);
     } catch {
@@ -199,37 +214,42 @@ export function ActionBar() {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <ActionButton
-        onClick={handleCopyLink}
-        label={copiedLink ? "Copied!" : "Copy Link"}
-      />
-      <ActionButton
-        onClick={handleCopySvg}
-        label={copiedSvg ? "Copied!" : "Copy SVG"}
-      />
-      <ActionButton
-        onClick={handleCopyJsx}
-        label={copiedJsx ? "Copied!" : "Copy JSX"}
-      />
-      <ActionButton
-        onClick={handleCopyCss}
-        label={copiedCss ? "Copied!" : "Copy CSS"}
-      />
-      <ActionButton
-        onClick={handleCopyReact}
-        label={copiedReact ? "Copied!" : "Copy React"}
-      />
-      <ActionButton onClick={handleDownload} label="Download SVG" />
+    <div className="flex flex-wrap items-center gap-2.5">
+      <SketchButton onClick={handleCopyLink} active={copiedLink} icon={<HugeiconsIcon icon={Link01Icon} size={16} strokeWidth={2.5} />}>
+        {copiedLink ? "Copied!" : "Link"}
+      </SketchButton>
+      <SketchButton onClick={handleCopySvg} active={copiedSvg} icon={<HugeiconsIcon icon={Svg01Icon} size={16} strokeWidth={2.5} />}>
+        {copiedSvg ? "Copied!" : "SVG"}
+      </SketchButton>
+      <SketchButton onClick={handleCopyJsx} active={copiedJsx} icon={<HugeiconsIcon icon={CodeIcon} size={16} strokeWidth={2.5} />}>
+        {copiedJsx ? "Copied!" : "JSX"}
+      </SketchButton>
+      <SketchButton onClick={handleCopyCss} active={copiedCss} icon={<HugeiconsIcon icon={CssThreeIcon} size={16} strokeWidth={2.5} />}>
+        {copiedCss ? "Copied!" : "CSS"}
+      </SketchButton>
+      <SketchButton onClick={handleCopyReact} active={copiedReact} icon={<HugeiconsIcon icon={ReactIcon} size={16} strokeWidth={2.5} />}>
+        {copiedReact ? "Copied!" : "React"}
+      </SketchButton>
+      <SketchButton onClick={handleDownload} icon={<HugeiconsIcon icon={Download04Icon} size={16} strokeWidth={2.5} />}>
+        SVG
+      </SketchButton>
+
       <div className="flex items-center gap-1.5">
-        <ActionButton
+        <SketchButton
           onClick={handleDownloadPng}
-          label={isDownloadingPng ? "Exporting..." : "Download PNG"}
-        />
+          icon={<HugeiconsIcon icon={Image02Icon} size={16} strokeWidth={2.5} />}
+        >
+          {isDownloadingPng ? "..." : "PNG"}
+        </SketchButton>
         <select
           value={pngScale}
           onChange={(e) => setPngScale(Number(e.target.value))}
-          className="px-2 py-1.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 focus:outline-none"
+          className="px-2 py-1.5 bg-white border-[3px] border-pencil text-sm font-body text-pencil cursor-pointer"
+          style={{
+            borderRadius: wobblyRadiusMd,
+            boxShadow: "3px 3px 0px 0px #2d2d2d",
+            fontFamily: "var(--font-body)",
+          }}
           title="PNG scale"
         >
           <option value={1}>1x</option>
@@ -237,15 +257,23 @@ export function ActionBar() {
           <option value={4}>4x</option>
         </select>
       </div>
+
       <div className="flex items-center gap-1.5">
-        <ActionButton
+        <SketchButton
           onClick={handleBatchExport}
-          label={isBatching ? "Generating..." : "Batch Export"}
-        />
+          icon={<HugeiconsIcon icon={PackageIcon} size={16} strokeWidth={2.5} />}
+        >
+          {isBatching ? "..." : "Batch"}
+        </SketchButton>
         <select
           value={batchCount}
           onChange={(e) => setBatchCount(Number(e.target.value))}
-          className="px-2 py-1.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 focus:outline-none"
+          className="px-2 py-1.5 bg-white border-[3px] border-pencil text-sm font-body text-pencil cursor-pointer"
+          style={{
+            borderRadius: wobblyRadiusMd,
+            boxShadow: "3px 3px 0px 0px #2d2d2d",
+            fontFamily: "var(--font-body)",
+          }}
           title="Batch count"
         >
           <option value={5}>5</option>
@@ -254,28 +282,46 @@ export function ActionBar() {
           <option value={50}>50</option>
         </select>
       </div>
-      <ActionButton
+
+      <SketchButton
         onClick={handleCopyAnimated}
-        label={copiedAnimated ? "Copied!" : "Copy Animated SVG"}
-      />
+        active={copiedAnimated}
+        icon={<HugeiconsIcon icon={Motion01Icon} size={16} strokeWidth={2.5} />}
+      >
+        {copiedAnimated ? "Copied!" : "Animated"}
+      </SketchButton>
+
       <SaveFavoriteButton />
     </div>
   );
 }
 
-function ActionButton({
+function SketchButton({
   onClick,
-  label,
+  children,
+  active,
+  icon,
 }: {
   onClick: () => void;
-  label: string;
+  children: React.ReactNode;
+  active?: boolean;
+  icon?: React.ReactNode;
 }) {
   return (
     <button
       onClick={onClick}
-      className="px-3 py-2 rounded-lg bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200 transition-colors"
+      className={`
+        inline-flex items-center gap-1.5 px-3 py-2
+        border-[3px] border-pencil text-sm font-body
+        transition-all duration-100
+        hover:bg-accent hover:text-white hover:shadow-[2px_2px_0px_0px_#2d2d2d]
+        active:shadow-none active:translate-x-[3px] active:translate-y-[3px]
+        ${active ? "bg-accent text-white shadow-[2px_2px_0px_0px_#2d2d2d]" : "bg-white shadow-[4px_4px_0px_0px_#2d2d2d] text-pencil"}
+      `}
+      style={{ borderRadius: wobblyRadius, fontFamily: "var(--font-body)" }}
     >
-      {label}
+      {icon}
+      <span>{children}</span>
     </button>
   );
 }

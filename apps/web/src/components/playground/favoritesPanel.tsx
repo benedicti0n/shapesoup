@@ -8,7 +8,10 @@ import {
   type FavoriteItem,
 } from "@/lib/utils/localStorage";
 import { usePlaygroundStore, type GeneratorName } from "@/lib/store/playgroundStore";
-import { Star } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { StarIcon, Delete01Icon, Bookmark02Icon } from "@hugeicons/core-free-icons";
+
+const wobblyRadius = "255px 15px 225px 15px / 15px 225px 15px 255px";
 
 export function FavoritesPanel() {
   const [favorites, setFavorites] = useState<FavoriteItem[]>(getFavorites);
@@ -32,45 +35,46 @@ export function FavoritesPanel() {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 mt-2">
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className="flex items-center justify-between text-sm font-semibold text-zinc-500 uppercase tracking-wider"
+        className="flex items-center justify-between text-lg font-bold font-heading text-pencil hover:text-accent transition-colors"
+        style={{ transform: "rotate(-0.5deg)" }}
       >
-        <span className="flex items-center gap-1.5">
-          <Star className="w-3.5 h-3.5" />
+        <span className="flex items-center gap-2">
+          <HugeiconsIcon icon={StarIcon} size={18} strokeWidth={2.5} />
           Favorites
         </span>
-        <span className="text-xs">{isOpen ? "−" : "+"}</span>
+        <span className="text-sm font-body">{isOpen ? "−" : "+"}</span>
       </button>
+      <div className="w-full h-0.5 bg-pencil border-dashed border-t-2 border-pencil opacity-20" />
 
       {isOpen && (
         <>
           {favorites.length === 0 ? (
-            <p className="text-xs text-zinc-400">No favorites yet.</p>
+            <p className="text-base font-body text-pencil/40">No favorites yet.</p>
           ) : (
-            <div className="flex flex-col gap-1.5 max-h-48 overflow-y-auto">
+            <div className="flex flex-col gap-2 max-h-48 overflow-y-auto">
               {favorites.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-50 dark:bg-zinc-800/50 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                  className="flex items-center gap-2 px-3 py-2 bg-white border-[3px] border-pencil transition-all duration-100 hover:shadow-[2px_2px_0px_0px_#2d2d2d] hover:-translate-y-px"
+                  style={{ borderRadius: wobblyRadius, boxShadow: "3px 3px 0px 0px rgba(45,45,45,0.1)" }}
                 >
                   <button
                     onClick={() => handleLoad(item)}
-                    className="flex-1 text-left text-sm text-zinc-700 dark:text-zinc-300 truncate"
+                    className="flex-1 text-left text-base font-body text-pencil truncate hover:text-accent transition-colors"
                     title={`${item.name} (${item.generator})`}
                   >
-                    <span className="font-medium">{item.name}</span>
-                    <span className="text-xs text-zinc-400 ml-2">
-                      {item.generator}
-                    </span>
+                    <span className="font-bold">{item.name}</span>
+                    <span className="text-sm text-pencil/50 ml-2">{item.generator}</span>
                   </button>
                   <button
                     onClick={() => handleDelete(item.id)}
-                    className="text-xs text-zinc-400 hover:text-red-500 transition-colors px-2"
+                    className="text-pencil/40 hover:text-accent transition-colors p-1"
                     aria-label="Remove favorite"
                   >
-                    &times;
+                    <HugeiconsIcon icon={Delete01Icon} size={16} strokeWidth={2.5} />
                   </button>
                 </div>
               ))}
@@ -108,10 +112,21 @@ export function SaveFavoriteButton() {
   return (
     <button
       onClick={handleSave}
-      className="px-3 py-2 rounded-lg bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200 transition-colors flex items-center gap-1.5"
+      className={`
+        inline-flex items-center gap-1.5 px-3 py-2
+        border-[3px] border-pencil text-sm font-body
+        transition-all duration-100
+        hover:shadow-[2px_2px_0px_0px_#2d2d2d] hover:-translate-y-px
+        active:shadow-none active:translate-x-[3px] active:translate-y-[3px]
+        ${saved
+          ? "bg-accent text-white shadow-[2px_2px_0px_0px_#2d2d2d]"
+          : "bg-white text-pencil shadow-[4px_4px_0px_0px_#2d2d2d] hover:bg-accent hover:text-white"
+        }
+      `}
+      style={{ borderRadius: wobblyRadius, fontFamily: "var(--font-body)" }}
       title="Save to favorites"
     >
-      <Star className={`w-4 h-4 ${saved ? "fill-yellow-400 text-yellow-400" : ""}`} />
+      <HugeiconsIcon icon={Bookmark02Icon} size={16} strokeWidth={2.5} />
       {saved ? "Saved!" : "Favorite"}
     </button>
   );
