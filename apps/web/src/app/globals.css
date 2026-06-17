@@ -154,3 +154,13 @@ select {
   background-position: right 10px center;
   padding-right: 32px;
 }
+
+/* Bounce animation for decorative elements */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(5deg);
+  }
+}
