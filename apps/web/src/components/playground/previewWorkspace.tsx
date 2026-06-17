@@ -77,6 +77,11 @@ export function PreviewWorkspace() {
     window.open(url, "_blank");
   };
 
+  const svgHtml = result.svg.replace(
+    "<svg",
+    '<svg style="width:100%;height:100%;display:block"'
+  );
+
   return (
     <div className="flex flex-col items-center gap-3 md:gap-4 w-full h-full">
       {/* Toolbar - desktop only */}
@@ -88,8 +93,9 @@ export function PreviewWorkspace() {
 
       {/* Sketch frame around preview */}
       <div
-        className={`relative w-full max-w-4xl border-[3px] border-pencil overflow-hidden p-2 md:p-3 ${bgClass} transition-colors duration-200`}
+        className={`relative w-full max-w-4xl border-[3px] border-pencil overflow-hidden p-2 md:p-3 max-h-[calc(100vh-320px)] md:max-h-[calc(100vh-280px)] ${bgClass} transition-colors duration-200`}
         style={{
+          aspectRatio: `${result.metadata.width} / ${result.metadata.height}`,
           borderRadius: "15px 225px 15px 255px / 255px 15px 225px 15px",
           boxShadow: "6px 6px 0px 0px #2d2d2d",
           transform: "rotate(-0.3deg)",
@@ -104,9 +110,9 @@ export function PreviewWorkspace() {
           }}
         />
         <div
-          className="w-full bg-white"
+          className="w-full h-full bg-white"
           style={{ borderRadius: "8px 200px 8px 230px / 230px 8px 200px 8px" }}
-          dangerouslySetInnerHTML={{ __html: result.svg }}
+          dangerouslySetInnerHTML={{ __html: svgHtml }}
         />
       </div>
 
