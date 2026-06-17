@@ -78,9 +78,9 @@ export function PreviewWorkspace() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full h-full">
-      {/* Toolbar */}
-      <div className="flex flex-wrap items-center justify-center gap-2">
+    <div className="flex flex-col items-center gap-3 md:gap-4 w-full h-full">
+      {/* Toolbar - desktop only */}
+      <div className="hidden md:flex flex-wrap items-center justify-center gap-2">
         <BgToggle label="Paper" active={bg === "paper"} onClick={() => setBg("paper")} />
         <BgToggle label="White" active={bg === "white"} onClick={() => setBg("white")} />
         <BgToggle label="Dark" active={bg === "dark"} onClick={() => setBg("dark")} />
@@ -88,7 +88,7 @@ export function PreviewWorkspace() {
 
       {/* Sketch frame around preview */}
       <div
-        className={`relative w-full max-w-4xl border-[3px] border-pencil overflow-hidden p-3 ${bgClass} transition-colors duration-200`}
+        className={`relative w-full max-w-4xl border-[3px] border-pencil overflow-hidden p-2 md:p-3 ${bgClass} transition-colors duration-200`}
         style={{
           borderRadius: "15px 225px 15px 255px / 255px 15px 225px 15px",
           boxShadow: "6px 6px 0px 0px #2d2d2d",
@@ -97,7 +97,7 @@ export function PreviewWorkspace() {
       >
         {/* Tape decoration */}
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-24 h-6 bg-muted/60 border border-pencil/20"
+          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-20 md:w-24 h-5 md:h-6 bg-muted/60 border border-pencil/20"
           style={{
             transform: "translate(-50%, -50%) rotate(-2deg)",
             borderRadius: "2px",
@@ -115,35 +115,35 @@ export function PreviewWorkspace() {
         <QuickActionButton
           onClick={handleCopySvg}
           icon={<HugeiconsIcon icon={Copy01Icon} size={14} strokeWidth={2.5} />}
-          label={copiedSvg ? "Copied!" : "Copy SVG"}
+          label={copiedSvg ? "Copied!" : "SVG"}
           active={copiedSvg}
         />
         <QuickActionButton
           onClick={handleDownloadPng}
           icon={<HugeiconsIcon icon={Image02Icon} size={14} strokeWidth={2.5} />}
-          label={isDownloadingPng ? "..." : "PNG 2x"}
+          label={isDownloadingPng ? "..." : "PNG"}
         />
         <QuickActionButton
           onClick={handleCopyLink}
           icon={<HugeiconsIcon icon={Link01Icon} size={14} strokeWidth={2.5} />}
-          label={copiedLink ? "Copied!" : "Copy Link"}
+          label={copiedLink ? "Copied!" : "Link"}
           active={copiedLink}
         />
         <QuickActionButton
           onClick={handleFullscreen}
           icon={<HugeiconsIcon icon={FullScreenIcon} size={14} strokeWidth={2.5} />}
-          label="Fullscreen"
+          label="Full"
         />
       </div>
 
       {/* Info badges */}
-      <div className="flex gap-3 flex-wrap justify-center">
+      <div className="flex gap-2 md:gap-3 flex-wrap justify-center">
         <Badge>
           {result.metadata.width} x {result.metadata.height}
         </Badge>
         <Badge>{result.metadata.elements} elements</Badge>
-        <Badge>{result.metadata.generator}</Badge>
-        <Badge>seed: {seed.slice(0, 12)}</Badge>
+        <Badge className="hidden md:inline-block">{result.metadata.generator}</Badge>
+        <Badge>seed: {seed.slice(0, 8)}</Badge>
       </div>
     </div>
   );
@@ -191,11 +191,12 @@ function QuickActionButton({
     <button
       onClick={onClick}
       className={`
-        inline-flex items-center gap-1.5 px-3 py-1.5
-        border-[3px] border-pencil text-sm font-body
+        inline-flex items-center gap-1 md:gap-1.5 px-2.5 md:px-3 py-1.5 md:py-2
+        border-[3px] border-pencil text-xs md:text-sm font-body
         transition-all duration-100
         hover:shadow-[2px_2px_0px_0px_#2d2d2d] hover:-translate-y-px
         active:shadow-none active:translate-x-[2px] active:translate-y-[2px]
+        min-h-[44px]
         ${active
           ? "bg-accent text-white shadow-[2px_2px_0px_0px_#2d2d2d]"
           : "bg-white shadow-[3px_3px_0px_0px_rgba(45,45,45,0.12)] text-pencil hover:bg-accent hover:text-white"
@@ -209,10 +210,10 @@ function QuickActionButton({
   );
 }
 
-function Badge({ children }: { children: React.ReactNode }) {
+function Badge({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <span
-      className="px-3 py-1 bg-white border-[3px] border-pencil text-sm font-body text-pencil"
+      className={`px-2 md:px-3 py-1 bg-white border-[3px] border-pencil text-xs md:text-sm font-body text-pencil ${className}`}
       style={{
         borderRadius: wobblyRadius,
         boxShadow: "3px 3px 0px 0px #2d2d2d",

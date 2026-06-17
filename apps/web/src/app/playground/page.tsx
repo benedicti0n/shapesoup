@@ -2,15 +2,20 @@
 
 import { useState, Suspense } from "react";
 import { PlaygroundHeader } from "@/components/playground/playgroundHeader";
-import { GeneratorBrowser, GeneratorChips } from "@/components/playground/generatorBrowser";
+import { GeneratorBrowser } from "@/components/playground/generatorBrowser";
 import { PreviewWorkspace } from "@/components/playground/previewWorkspace";
 import { InspectorSidebar } from "@/components/playground/inspectorSidebar";
-import { ActionMenus } from "@/components/playground/actionMenus";
 import { UrlSync } from "@/components/playground/urlSync";
+import { MobileActionSheet } from "@/components/playground/mobileActionSheet";
+import { MobileControlsSheet, MobileControlsBar } from "@/components/playground/mobileControlsSheet";
+import { MobileGeneratorPicker, MobileGeneratorSheet } from "@/components/playground/mobileGeneratorPicker";
 
 export default function PlaygroundPage() {
   const [showLeftDrawer, setShowLeftDrawer] = useState(false);
   const [showRightDrawer, setShowRightDrawer] = useState(false);
+  const [showActionSheet, setShowActionSheet] = useState(false);
+  const [showControlsSheet, setShowControlsSheet] = useState(false);
+  const [showGeneratorSheet, setShowGeneratorSheet] = useState(false);
 
   return (
     <div className="flex flex-col h-screen bg-paper text-pencil overflow-hidden">
@@ -18,15 +23,8 @@ export default function PlaygroundPage() {
         <UrlSync />
       </Suspense>
 
-      <PlaygroundHeader
-        onOpenGenerators={() => setShowLeftDrawer(true)}
-        onOpenInspector={() => setShowRightDrawer(true)}
-      />
-
-      {/* Mobile action bar below header */}
-      <div className="sm:hidden px-4 py-2 bg-white border-b-[3px] border-pencil overflow-x-auto">
-        <ActionMenus />
-      </div>
+      {/* Header */}
+      <PlaygroundHeader onOpenGenerators={() => setShowLeftDrawer(true)} />
 
       <main className="flex flex-1 overflow-hidden relative">
         {/* Desktop left sidebar */}
@@ -39,26 +37,13 @@ export default function PlaygroundPage() {
 
         {/* Center workspace */}
         <section className="flex-1 flex flex-col overflow-y-auto">
-          {/* Mobile generator chips */}
-          <div className="md:hidden px-4 pt-4 pb-2">
-            <GeneratorChips onSelect={() => setShowLeftDrawer(false)} />
+          {/* Mobile: generator picker button */}
+          <div className="md:hidden px-4 pt-3 pb-1">
+            <MobileGeneratorPicker onOpen={() => setShowGeneratorSheet(true)} />
           </div>
 
-          <div className="flex-1 flex items-center justify-center p-4 md:p-6">
+          <div className="flex-1 flex items-center justify-center p-3 md:p-6">
             <PreviewWorkspace />
-          </div>
-
-          {/* Mobile inspector toggle */}
-          <div className="md:hidden px-4 pb-4">
-            <button
-              onClick={() => setShowRightDrawer(true)}
-              className="w-full px-4 py-2.5 bg-white border-[3px] border-pencil text-base font-body text-pencil
-                shadow-[4px_4px_0px_0px_#2d2d2d] hover:bg-accent hover:text-white hover:shadow-[2px_2px_0px_0px_#2d2d2d]
-                active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all duration-100"
-              style={{ borderRadius: "255px 15px 225px 15px / 15px 225px 15px 255px", fontFamily: "var(--font-body)" }}
-            >
-              Open Controls
-            </button>
           </div>
         </section>
 
@@ -70,7 +55,7 @@ export default function PlaygroundPage() {
           <InspectorSidebar />
         </aside>
 
-        {/* Mobile left drawer */}
+        {/* Mobile left drawer (generator browser) */}
         {showLeftDrawer && (
           <>
             <div
@@ -100,7 +85,7 @@ export default function PlaygroundPage() {
           </>
         )}
 
-        {/* Mobile right drawer */}
+        {/* Mobile right drawer (inspector - kept for fallback) */}
         {showRightDrawer && (
           <>
             <div
@@ -130,6 +115,17 @@ export default function PlaygroundPage() {
           </>
         )}
       </main>
+
+      {/* Mobile sticky bottom controls bar */}
+      <MobileControlsBar
+        onOpenControls={() => setShowControlsSheet(true)}
+        onOpenActions={() => setShowActionSheet(true)}
+      />
+
+      {/* Mobile overlays */}
+      {showActionSheet && <MobileActionSheet onClose={() => setShowActionSheet(false)} />}
+      {showControlsSheet && <MobileControlsSheet onClose={() => setShowControlsSheet(false)} />}
+      {showGeneratorSheet && <MobileGeneratorSheet onClose={() => setShowGeneratorSheet(false)} />}
     </div>
   );
 }
