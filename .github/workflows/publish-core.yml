@@ -30,14 +30,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build core
+        run: pnpm --filter @shapesoup/core build
+
       - name: Typecheck
         run: pnpm typecheck
 
       - name: Test
         run: pnpm test --run
-
-      - name: Build core
-        run: pnpm --filter @shapesoup/core build
 
       - name: Publish to npm
         run: pnpm --filter @shapesoup/core publish --no-git-checks --access public
