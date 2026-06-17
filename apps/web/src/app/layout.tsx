@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Kalam, Patrick_Hand } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const kalam = Kalam({
@@ -66,7 +67,10 @@ export default function RootLayout({
       lang="en"
       className={`${kalam.variable} ${patrickHand.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-body">{children}</body>
+      <body className="min-h-full flex flex-col font-body">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
