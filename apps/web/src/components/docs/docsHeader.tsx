@@ -19,7 +19,7 @@ export function DocsHeader() {
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
           <Image
-            src="/shapesoup-logo.png"
+            src="/shapesoup-logo.svg"
             alt="ShapeSoup"
             width={28}
             height={28}

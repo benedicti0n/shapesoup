@@ -9,7 +9,7 @@ export function DocsFooter() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <Link href="/" className="flex items-center gap-2 group">
             <Image
-              src="/shapesoup-logo.png"
+              src="/shapesoup-logo.svg"
               alt="ShapeSoup"
               width={20}
               height={20}

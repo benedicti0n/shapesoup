@@ -16,7 +16,7 @@ export function LandingFooter() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="flex items-center gap-2">
             <Image
-              src="/shapesoup-logo.png"
+              src="/shapesoup-logo.svg"
               alt="ShapeSoup"
               width={24}
               height={24}

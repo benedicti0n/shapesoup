@@ -36,7 +36,7 @@ export default function PlaygroundPage() {
           </button>
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <Image
-              src="/shapesoup-logo.png"
+              src="/shapesoup-logo.svg"
               alt="ShapeSoup"
               width={28}
               height={28}
