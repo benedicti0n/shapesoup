@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { PencilEdit01Icon } from "@hugeicons/core-free-icons";
-import { SketchButton } from "./sketchPrimitives";
+import { SketchButton } from "@/components/landing/sketchPrimitives";
 
 const navLinks = [
+  { label: "Quick Start", href: "#quick-start" },
   { label: "Generators", href: "#generators" },
-  { label: "How it works", href: "#how-it-works" },
-  { label: "Developers", href: "#developers" },
-  { label: "Features", href: "#features" },
-  { label: "Docs", href: "/docs" },
+  { label: "Types", href: "#types" },
+  { label: "Presets", href: "#presets" },
+  { label: "Utilities", href: "#utilities" },
 ];
 
-export function LandingHeader() {
+export function DocsHeader() {
   return (
     <header
       className="sticky top-0 z-50 bg-paper/95 border-b-[3px] border-pencil backdrop-blur-sm"
@@ -41,9 +41,11 @@ export function LandingHeader() {
           ))}
         </nav>
 
-        <SketchButton href="/playground" variant="accent">
-          Open Playground
-        </SketchButton>
+        <div className="flex items-center gap-2">
+          <SketchButton href="/playground" variant="accent">
+            Playground
+          </SketchButton>
+        </div>
       </div>
     </header>
   );

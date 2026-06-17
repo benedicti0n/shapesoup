@@ -45,6 +45,15 @@ export default function PlaygroundPage() {
         </div>
 
         <div className="flex items-center gap-2">
+          <Link
+            href="/docs"
+            className="hidden md:inline-flex px-3 py-2 bg-white border-[3px] border-pencil text-sm font-body text-pencil
+              shadow-[3px_3px_0px_0px_#2d2d2d] hover:bg-accent hover:text-white hover:shadow-[2px_2px_0px_0px_#2d2d2d]
+              active:shadow-none active:translate-x-[2px] active:translate-y-[2px] transition-all duration-100"
+            style={{ borderRadius: "255px 15px 225px 15px / 15px 225px 15px 255px", fontFamily: "var(--font-body)" }}
+          >
+            Docs
+          </Link>
           <div className="hidden md:flex">
             <ActionBar />
           </div>

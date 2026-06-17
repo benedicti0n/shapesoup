@@ -16,7 +16,24 @@ const patrickHand = Patrick_Hand({
 
 export const metadata: Metadata = {
   title: "ShapeSoup — SVG Pattern Engine",
-  description: "A seed-based SVG generative pattern playground",
+  description:
+    "A seed-based SVG generative pattern engine. Beautiful, deterministic, scalable backgrounds from a config + seed.",
+  metadataBase: new URL("https://shapesoup.vercel.app"),
+  openGraph: {
+    title: "ShapeSoup — SVG Pattern Engine",
+    description:
+      "A seed-based SVG generative pattern engine. Beautiful, deterministic, scalable backgrounds from a config + seed.",
+    url: "https://shapesoup.vercel.app",
+    siteName: "ShapeSoup",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ShapeSoup — SVG Pattern Engine",
+    description:
+      "A seed-based SVG generative pattern engine. Beautiful, deterministic, scalable backgrounds from a config + seed.",
+  },
 };
 
 export default function RootLayout({
