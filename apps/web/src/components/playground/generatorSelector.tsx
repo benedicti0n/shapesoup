@@ -1,6 +1,7 @@
 "use client";
 
 import { usePlaygroundStore, GeneratorName } from "@/lib/store/playgroundStore";
+import { FavoritesPanel } from "@/components/playground/favoritesPanel";
 
 const generatorNames: GeneratorName[] = [
   "Blob",
@@ -37,6 +38,7 @@ export function GeneratorSelector() {
           </button>
         ))}
       </div>
+      <FavoritesPanel />
     </div>
   );
 }

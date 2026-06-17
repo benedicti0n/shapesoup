@@ -1,6 +1,7 @@
 "use client";
 
 import { usePlaygroundStore } from "@/lib/store/playgroundStore";
+import { PresetsPanel } from "@/components/playground/presetsPanel";
 import type {
   BlobConfig,
   WaveConfig,
@@ -32,6 +33,8 @@ export function ControlsSidebar() {
 
   return (
     <div className="flex flex-col gap-6">
+      <PresetsPanel />
+
       <div className="flex flex-col gap-2">
         <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider">
           Seed

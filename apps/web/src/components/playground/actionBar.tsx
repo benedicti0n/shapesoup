@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { usePlaygroundStore } from "@/lib/store/playgroundStore";
+import { downloadBatchZip } from "@/lib/utils/batchExport";
+import { wrapWithAnimation } from "@/lib/utils/animationExport";
+import { SaveFavoriteButton } from "@/components/playground/favoritesPanel";
 import {
   copyToClipboard,
   downloadSvg,
@@ -9,9 +12,21 @@ import {
   generateCssBackground,
   generateReactComponent,
 } from "@/lib/utils/export";
+import {
+  generateBlob,
+  generateWave,
+  generateLayeredWaves,
+  generateStackedWaves,
+  generateBlurryGradient,
+  generateBlobScene,
+  generateLowPolyGrid,
+  generateLayeredPeaks,
+} from "@shapesoup/core";
 
 export function ActionBar() {
   const result = usePlaygroundStore((s) => s.result);
+  const activeGenerator = usePlaygroundStore((s) => s.activeGenerator);
+  const configs = usePlaygroundStore((s) => s.configs);
   const copiedSvg = usePlaygroundStore((s) => s.copiedSvg);
   const copiedJsx = usePlaygroundStore((s) => s.copiedJsx);
   const copiedLink = usePlaygroundStore((s) => s.copiedLink);
@@ -25,6 +40,9 @@ export function ActionBar() {
 
   const [pngScale, setPngScale] = useState(2);
   const [isDownloadingPng, setIsDownloadingPng] = useState(false);
+  const [batchCount, setBatchCount] = useState(5);
+  const [isBatching, setIsBatching] = useState(false);
+  const [copiedAnimated, setCopiedAnimated] = useState(false);
 
   const handleCopySvg = async () => {
     if (!result) return;
@@ -99,6 +117,66 @@ export function ActionBar() {
     }
   };
 
+  const handleBatchExport = async () => {
+    if (!result || isBatching) return;
+    setIsBatching(true);
+    try {
+      const items: { filename: string; content: string }[] = [];
+      const config = configs[activeGenerator];
+
+      for (let i = 0; i < batchCount; i++) {
+        const seed = Math.random().toString(36).substring(2, 10);
+        let output;
+        switch (activeGenerator) {
+          case "Blob":
+            output = generateBlob({ ...config, seed });
+            break;
+          case "Wave":
+            output = generateWave({ ...config, seed });
+            break;
+          case "Blurry Gradient":
+            output = generateBlurryGradient({ ...config, seed });
+            break;
+          case "Blob Scene":
+            output = generateBlobScene({ ...config, seed });
+            break;
+          case "Layered Waves":
+            output = generateLayeredWaves({ ...config, seed });
+            break;
+          case "Stacked Waves":
+            output = generateStackedWaves({ ...config, seed });
+            break;
+          case "Low Poly Grid":
+            output = generateLowPolyGrid({ ...config, seed });
+            break;
+          case "Layered Peaks":
+            output = generateLayeredPeaks({ ...config, seed });
+            break;
+        }
+        items.push({
+          filename: `${activeGenerator.toLowerCase().replace(/\s+/g, "-")}-${seed}.svg`,
+          content: output.svg,
+        });
+      }
+
+      await downloadBatchZip(items);
+    } catch {
+      // silently fail
+    } finally {
+      setIsBatching(false);
+    }
+  };
+
+  const handleCopyAnimated = async () => {
+    if (!result) return;
+    const animated = wrapWithAnimation(result.svg, activeGenerator);
+    const success = await copyToClipboard(animated);
+    if (success) {
+      setCopiedAnimated(true);
+      setTimeout(() => setCopiedAnimated(false), 2000);
+    }
+  };
+
   return (
     <div className="flex flex-wrap items-center gap-2">
       <ActionButton
@@ -138,6 +216,28 @@ export function ActionBar() {
           <option value={4}>4x</option>
         </select>
       </div>
+      <div className="flex items-center gap-1.5">
+        <ActionButton
+          onClick={handleBatchExport}
+          label={isBatching ? "Generating..." : "Batch Export"}
+        />
+        <select
+          value={batchCount}
+          onChange={(e) => setBatchCount(Number(e.target.value))}
+          className="px-2 py-1.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 focus:outline-none"
+          title="Batch count"
+        >
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={20}>20</option>
+          <option value={50}>50</option>
+        </select>
+      </div>
+      <ActionButton
+        onClick={handleCopyAnimated}
+        label={copiedAnimated ? "Copied!" : "Copy Animated SVG"}
+      />
+      <SaveFavoriteButton />
     </div>
   );
 }
