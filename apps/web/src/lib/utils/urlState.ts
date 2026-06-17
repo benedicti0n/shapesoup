@@ -9,6 +9,11 @@ export const generatorSlugMap: Record<string, GeneratorName> = {
   stackedWaves: "Stacked Waves",
   lowPolyGrid: "Low Poly Grid",
   layeredPeaks: "Layered Peaks",
+  topoLines: "Topographic Lines",
+  dotMatrix: "Dot Matrix",
+  meshGradient: "Mesh Gradient",
+  noiseGrid: "Noise Grid",
+  bauhausPattern: "Bauhaus Pattern",
 };
 
 export const generatorNameToSlug: Record<GeneratorName, string> = {
@@ -20,6 +25,11 @@ export const generatorNameToSlug: Record<GeneratorName, string> = {
   "Stacked Waves": "stackedWaves",
   "Low Poly Grid": "lowPolyGrid",
   "Layered Peaks": "layeredPeaks",
+  "Topographic Lines": "topoLines",
+  "Dot Matrix": "dotMatrix",
+  "Mesh Gradient": "meshGradient",
+  "Noise Grid": "noiseGrid",
+  "Bauhaus Pattern": "bauhausPattern",
 };
 
 export interface UrlState {

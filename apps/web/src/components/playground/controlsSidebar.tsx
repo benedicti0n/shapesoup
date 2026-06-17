@@ -9,6 +9,11 @@ import type {
   BlobSceneConfig,
   LowPolyGridConfig,
   LayeredPeaksConfig,
+  TopoLinesConfig,
+  DotMatrixConfig,
+  MeshGradientConfig,
+  NoiseGridConfig,
+  BauhausPatternConfig,
 } from "@shapesoup/core";
 
 const canvasPresets = [
@@ -131,6 +136,21 @@ export function ControlsSidebar() {
       )}
       {activeGenerator === "Layered Peaks" && (
         <LayeredPeaksControls config={configs["Layered Peaks"]} update={updateConfig} />
+      )}
+      {activeGenerator === "Topographic Lines" && (
+        <TopoLinesControls config={configs["Topographic Lines"]} update={updateConfig} />
+      )}
+      {activeGenerator === "Dot Matrix" && (
+        <DotMatrixControls config={configs["Dot Matrix"]} update={updateConfig} />
+      )}
+      {activeGenerator === "Mesh Gradient" && (
+        <MeshGradientControls config={configs["Mesh Gradient"]} update={updateConfig} />
+      )}
+      {activeGenerator === "Noise Grid" && (
+        <NoiseGridControls config={configs["Noise Grid"]} update={updateConfig} />
+      )}
+      {activeGenerator === "Bauhaus Pattern" && (
+        <BauhausPatternControls config={configs["Bauhaus Pattern"]} update={updateConfig} />
       )}
     </div>
   );
@@ -475,6 +495,311 @@ function LayeredPeaksControls({
       <ColorPaletteInput
         colors={config.colors}
         onChange={(colors) => update("Layered Peaks", { colors })}
+      />
+    </div>
+  );
+}
+
+function TopoLinesControls({
+  config,
+  update,
+}: {
+  config: TopoLinesConfig;
+  update: (generator: "Topographic Lines", updates: Partial<TopoLinesConfig>) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-4">
+      <ControlSlider
+        label="Line Count"
+        value={config.lineCount}
+        min={3}
+        max={40}
+        step={1}
+        onChange={(v) => update("Topographic Lines", { lineCount: v })}
+      />
+      <ControlSlider
+        label="Amplitude"
+        value={config.amplitude}
+        min={5}
+        max={200}
+        step={5}
+        onChange={(v) => update("Topographic Lines", { amplitude: v })}
+      />
+      <ControlSlider
+        label="Frequency"
+        value={config.frequency}
+        min={0.001}
+        max={0.05}
+        step={0.001}
+        onChange={(v) => update("Topographic Lines", { frequency: v })}
+      />
+      <ControlSlider
+        label="Noise"
+        value={config.noise}
+        min={0}
+        max={1}
+        step={0.05}
+        onChange={(v) => update("Topographic Lines", { noise: v })}
+      />
+      <ControlSlider
+        label="Stroke Width"
+        value={config.strokeWidth}
+        min={0.5}
+        max={5}
+        step={0.5}
+        onChange={(v) => update("Topographic Lines", { strokeWidth: v })}
+      />
+      <ControlSlider
+        label="Spacing"
+        value={config.spacing}
+        min={10}
+        max={120}
+        step={5}
+        onChange={(v) => update("Topographic Lines", { spacing: v })}
+      />
+      <ColorPaletteInput
+        colors={config.colors}
+        onChange={(colors) => update("Topographic Lines", { colors })}
+      />
+    </div>
+  );
+}
+
+function DotMatrixControls({
+  config,
+  update,
+}: {
+  config: DotMatrixConfig;
+  update: (generator: "Dot Matrix", updates: Partial<DotMatrixConfig>) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-4">
+      <ControlSlider
+        label="Columns"
+        value={config.columns}
+        min={4}
+        max={40}
+        step={1}
+        onChange={(v) => update("Dot Matrix", { columns: v })}
+      />
+      <ControlSlider
+        label="Rows"
+        value={config.rows}
+        min={4}
+        max={30}
+        step={1}
+        onChange={(v) => update("Dot Matrix", { rows: v })}
+      />
+      <ControlSlider
+        label="Min Radius"
+        value={config.minRadius}
+        min={1}
+        max={20}
+        step={1}
+        onChange={(v) => update("Dot Matrix", { minRadius: v })}
+      />
+      <ControlSlider
+        label="Max Radius"
+        value={config.maxRadius}
+        min={2}
+        max={50}
+        step={1}
+        onChange={(v) => update("Dot Matrix", { maxRadius: v })}
+      />
+      <ControlSlider
+        label="Jitter"
+        value={config.jitter}
+        min={0}
+        max={1}
+        step={0.05}
+        onChange={(v) => update("Dot Matrix", { jitter: v })}
+      />
+      <ControlSlider
+        label="Density"
+        value={config.density}
+        min={0.1}
+        max={1}
+        step={0.05}
+        onChange={(v) => update("Dot Matrix", { density: v })}
+      />
+      <ColorPaletteInput
+        colors={config.colors}
+        onChange={(colors) => update("Dot Matrix", { colors })}
+      />
+    </div>
+  );
+}
+
+function MeshGradientControls({
+  config,
+  update,
+}: {
+  config: MeshGradientConfig;
+  update: (generator: "Mesh Gradient", updates: Partial<MeshGradientConfig>) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-4">
+      <ControlSlider
+        label="Blob Count"
+        value={config.blobCount}
+        min={2}
+        max={15}
+        step={1}
+        onChange={(v) => update("Mesh Gradient", { blobCount: v })}
+      />
+      <ControlSlider
+        label="Blur"
+        value={config.blur}
+        min={0}
+        max={120}
+        step={5}
+        onChange={(v) => update("Mesh Gradient", { blur: v })}
+      />
+      <ControlSlider
+        label="Opacity"
+        value={config.opacity}
+        min={0.1}
+        max={1}
+        step={0.05}
+        onChange={(v) => update("Mesh Gradient", { opacity: v })}
+      />
+      <ControlSlider
+        label="Min Radius"
+        value={config.minRadius}
+        min={20}
+        max={300}
+        step={10}
+        onChange={(v) => update("Mesh Gradient", { minRadius: v })}
+      />
+      <ControlSlider
+        label="Max Radius"
+        value={config.maxRadius}
+        min={50}
+        max={600}
+        step={10}
+        onChange={(v) => update("Mesh Gradient", { maxRadius: v })}
+      />
+      <ColorPaletteInput
+        colors={config.colors}
+        onChange={(colors) => update("Mesh Gradient", { colors })}
+      />
+    </div>
+  );
+}
+
+function NoiseGridControls({
+  config,
+  update,
+}: {
+  config: NoiseGridConfig;
+  update: (generator: "Noise Grid", updates: Partial<NoiseGridConfig>) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-4">
+      <ControlSlider
+        label="Cell Size"
+        value={config.cellSize}
+        min={10}
+        max={100}
+        step={5}
+        onChange={(v) => update("Noise Grid", { cellSize: v })}
+      />
+      <ControlSlider
+        label="Density"
+        value={config.density}
+        min={0.1}
+        max={1}
+        step={0.05}
+        onChange={(v) => update("Noise Grid", { density: v })}
+      />
+      <ControlSlider
+        label="Shape Size"
+        value={config.shapeSize}
+        min={0.2}
+        max={1}
+        step={0.05}
+        onChange={(v) => update("Noise Grid", { shapeSize: v })}
+      />
+      <ControlSlider
+        label="Jitter"
+        value={config.jitter}
+        min={0}
+        max={1}
+        step={0.05}
+        onChange={(v) => update("Noise Grid", { jitter: v })}
+      />
+      <ControlSlider
+        label="Stroke Width"
+        value={config.strokeWidth}
+        min={0.5}
+        max={5}
+        step={0.5}
+        onChange={(v) => update("Noise Grid", { strokeWidth: v })}
+      />
+      <ColorPaletteInput
+        colors={config.colors}
+        onChange={(colors) => update("Noise Grid", { colors })}
+      />
+    </div>
+  );
+}
+
+function BauhausPatternControls({
+  config,
+  update,
+}: {
+  config: BauhausPatternConfig;
+  update: (generator: "Bauhaus Pattern", updates: Partial<BauhausPatternConfig>) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-4">
+      <ControlSlider
+        label="Shape Count"
+        value={config.shapeCount}
+        min={3}
+        max={40}
+        step={1}
+        onChange={(v) => update("Bauhaus Pattern", { shapeCount: v })}
+      />
+      <ControlSlider
+        label="Min Size"
+        value={config.minSize}
+        min={10}
+        max={100}
+        step={5}
+        onChange={(v) => update("Bauhaus Pattern", { minSize: v })}
+      />
+      <ControlSlider
+        label="Max Size"
+        value={config.maxSize}
+        min={50}
+        max={400}
+        step={10}
+        onChange={(v) => update("Bauhaus Pattern", { maxSize: v })}
+      />
+      <ControlSlider
+        label="Stroke Width"
+        value={config.strokeWidth}
+        min={1}
+        max={10}
+        step={0.5}
+        onChange={(v) => update("Bauhaus Pattern", { strokeWidth: v })}
+      />
+      <div className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          id="allowStrokeOnly"
+          checked={config.allowStrokeOnly}
+          onChange={(e) => update("Bauhaus Pattern", { allowStrokeOnly: e.target.checked })}
+          className="w-4 h-4 accent-zinc-900"
+        />
+        <label htmlFor="allowStrokeOnly" className="text-sm text-zinc-700 dark:text-zinc-300">
+          Allow Stroke Only
+        </label>
+      </div>
+      <ColorPaletteInput
+        colors={config.colors}
+        onChange={(colors) => update("Bauhaus Pattern", { colors })}
       />
     </div>
   );

@@ -21,6 +21,11 @@ import {
   generateBlobScene,
   generateLowPolyGrid,
   generateLayeredPeaks,
+  generateTopoLines,
+  generateDotMatrix,
+  generateMeshGradient,
+  generateNoiseGrid,
+  generateBauhausPattern,
 } from "@shapesoup/core";
 
 export function ActionBar() {
@@ -124,40 +129,56 @@ export function ActionBar() {
       const items: { filename: string; content: string }[] = [];
       const config = configs[activeGenerator];
 
-      for (let i = 0; i < batchCount; i++) {
-        const seed = Math.random().toString(36).substring(2, 10);
-        let output;
-        switch (activeGenerator) {
-          case "Blob":
-            output = generateBlob({ ...config, seed });
-            break;
-          case "Wave":
-            output = generateWave({ ...config, seed });
-            break;
-          case "Blurry Gradient":
-            output = generateBlurryGradient({ ...config, seed });
-            break;
-          case "Blob Scene":
-            output = generateBlobScene({ ...config, seed });
-            break;
-          case "Layered Waves":
-            output = generateLayeredWaves({ ...config, seed });
-            break;
-          case "Stacked Waves":
-            output = generateStackedWaves({ ...config, seed });
-            break;
-          case "Low Poly Grid":
-            output = generateLowPolyGrid({ ...config, seed });
-            break;
-          case "Layered Peaks":
-            output = generateLayeredPeaks({ ...config, seed });
-            break;
+        for (let i = 0; i < batchCount; i++) {
+          const seed = Math.random().toString(36).substring(2, 10);
+          let output;
+          switch (activeGenerator) {
+            case "Blob":
+              output = generateBlob({ ...config, seed });
+              break;
+            case "Wave":
+              output = generateWave({ ...config, seed });
+              break;
+            case "Blurry Gradient":
+              output = generateBlurryGradient({ ...config, seed });
+              break;
+            case "Blob Scene":
+              output = generateBlobScene({ ...config, seed });
+              break;
+            case "Layered Waves":
+              output = generateLayeredWaves({ ...config, seed });
+              break;
+            case "Stacked Waves":
+              output = generateStackedWaves({ ...config, seed });
+              break;
+            case "Low Poly Grid":
+              output = generateLowPolyGrid({ ...config, seed });
+              break;
+            case "Layered Peaks":
+              output = generateLayeredPeaks({ ...config, seed });
+              break;
+            case "Topographic Lines":
+              output = generateTopoLines({ ...config, seed });
+              break;
+            case "Dot Matrix":
+              output = generateDotMatrix({ ...config, seed });
+              break;
+            case "Mesh Gradient":
+              output = generateMeshGradient({ ...config, seed });
+              break;
+            case "Noise Grid":
+              output = generateNoiseGrid({ ...config, seed });
+              break;
+            case "Bauhaus Pattern":
+              output = generateBauhausPattern({ ...config, seed });
+              break;
+          }
+          if (!output) continue;
+          items.push({
+            filename: `${activeGenerator.toLowerCase().replace(/\s+/g, "-")}-${seed}.svg`,
+            content: output.svg,
+          });
         }
-        items.push({
-          filename: `${activeGenerator.toLowerCase().replace(/\s+/g, "-")}-${seed}.svg`,
-          content: output.svg,
-        });
-      }
 
       await downloadBatchZip(items);
     } catch {

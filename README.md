@@ -25,7 +25,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Playground Features
 
-- **8 Generators**: Blob, Wave, Layered Waves, Stacked Waves, Blurry Gradient, Blob Scene, Low Poly Grid, Layered Peaks
+- **13 Generators**: Blob, Wave, Layered Waves, Stacked Waves, Blurry Gradient, Blob Scene, Low Poly Grid, Layered Peaks, Topographic Lines, Dot Matrix, Mesh Gradient, Noise Grid, Bauhaus Pattern
 - **Shareable URLs** — every setting is reflected in the URL; share links and they restore the exact same pattern
 - **Copy Link** — copy the current shareable URL to clipboard
 - **Copy SVG** — raw SVG string

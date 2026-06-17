@@ -12,6 +12,11 @@ const generatorNames: GeneratorName[] = [
   "Stacked Waves",
   "Low Poly Grid",
   "Layered Peaks",
+  "Topographic Lines",
+  "Dot Matrix",
+  "Mesh Gradient",
+  "Noise Grid",
+  "Bauhaus Pattern",
 ];
 
 export function GeneratorSelector() {

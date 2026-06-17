@@ -8,6 +8,11 @@ import {
   generateBlobScene,
   generateLowPolyGrid,
   generateLayeredPeaks,
+  generateTopoLines,
+  generateDotMatrix,
+  generateMeshGradient,
+  generateNoiseGrid,
+  generateBauhausPattern,
   createSeededRandom,
   getRandomPalette,
   type BlobConfig,
@@ -16,6 +21,11 @@ import {
   type BlobSceneConfig,
   type LowPolyGridConfig,
   type LayeredPeaksConfig,
+  type TopoLinesConfig,
+  type DotMatrixConfig,
+  type MeshGradientConfig,
+  type NoiseGridConfig,
+  type BauhausPatternConfig,
   type GeneratorOutput,
 } from "@shapesoup/core";
 import { svgToJsx } from "@/lib/utils/export";
@@ -28,7 +38,12 @@ export type GeneratorName =
   | "Layered Waves"
   | "Stacked Waves"
   | "Low Poly Grid"
-  | "Layered Peaks";
+  | "Layered Peaks"
+  | "Topographic Lines"
+  | "Dot Matrix"
+  | "Mesh Gradient"
+  | "Noise Grid"
+  | "Bauhaus Pattern";
 
 type WebGeneratorResult = GeneratorOutput & { jsx: string };
 
@@ -41,6 +56,11 @@ interface GeneratorConfigs {
   "Stacked Waves": WaveConfig;
   "Low Poly Grid": LowPolyGridConfig;
   "Layered Peaks": LayeredPeaksConfig;
+  "Topographic Lines": TopoLinesConfig;
+  "Dot Matrix": DotMatrixConfig;
+  "Mesh Gradient": MeshGradientConfig;
+  "Noise Grid": NoiseGridConfig;
+  "Bauhaus Pattern": BauhausPatternConfig;
 }
 
 const defaultWidth = 800;
@@ -113,6 +133,63 @@ export const defaultConfigs: GeneratorConfigs = {
     roughness: 0.4,
     colors: ["#1e293b", "#334155", "#475569", "#64748b", "#94a3b8"],
   },
+  "Topographic Lines": {
+    width: defaultWidth,
+    height: defaultHeight,
+    lineCount: 12,
+    amplitude: 60,
+    frequency: 0.008,
+    noise: 0.5,
+    strokeWidth: 1.5,
+    spacing: 50,
+    colors: ["#1e293b", "#38bdf8", "#a78bfa", "#f472b6"],
+    backgroundColor: "#f8fafc",
+  },
+  "Dot Matrix": {
+    width: defaultWidth,
+    height: defaultHeight,
+    columns: 16,
+    rows: 12,
+    minRadius: 2,
+    maxRadius: 20,
+    jitter: 0.3,
+    density: 0.85,
+    colors: ["#0f172a", "#334155", "#64748b", "#94a3b8"],
+    backgroundColor: "#f1f5f9",
+  },
+  "Mesh Gradient": {
+    width: defaultWidth,
+    height: defaultHeight,
+    blobCount: 6,
+    blur: 50,
+    opacity: 0.7,
+    minRadius: 120,
+    maxRadius: 350,
+    colors: ["#c084fc", "#818cf8", "#38bdf8", "#2dd4bf", "#f472b6"],
+    backgroundColor: "#0f172a",
+  },
+  "Noise Grid": {
+    width: defaultWidth,
+    height: defaultHeight,
+    cellSize: 30,
+    density: 0.6,
+    shapeSize: 0.7,
+    jitter: 0.4,
+    strokeWidth: 1.5,
+    colors: ["#1e293b", "#475569", "#94a3b8", "#cbd5e1"],
+    backgroundColor: "#f8fafc",
+  },
+  "Bauhaus Pattern": {
+    width: defaultWidth,
+    height: defaultHeight,
+    shapeCount: 18,
+    minSize: 30,
+    maxSize: 180,
+    strokeWidth: 3,
+    colors: ["#dc2626", "#2563eb", "#f59e0b", "#1f2937", "#f3f4f6"],
+    backgroundColor: "#fef3c7",
+    allowStrokeOnly: true,
+  },
 };
 
 function generateRandomSeed(): string {
@@ -150,6 +227,16 @@ function computeResult(
       return wrapWithJsx(generateLowPolyGrid(config));
     case "Layered Peaks":
       return wrapWithJsx(generateLayeredPeaks(config));
+    case "Topographic Lines":
+      return wrapWithJsx(generateTopoLines(config));
+    case "Dot Matrix":
+      return wrapWithJsx(generateDotMatrix(config));
+    case "Mesh Gradient":
+      return wrapWithJsx(generateMeshGradient(config));
+    case "Noise Grid":
+      return wrapWithJsx(generateNoiseGrid(config));
+    case "Bauhaus Pattern":
+      return wrapWithJsx(generateBauhausPattern(config));
   }
 }
 

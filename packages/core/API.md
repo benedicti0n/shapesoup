@@ -41,7 +41,12 @@ type GeneratorType =
   | "layeredWaves"
   | "stackedWaves"
   | "lowPolyGrid"
-  | "layeredPeaks";
+  | "layeredPeaks"
+  | "topoLines"
+  | "dotMatrix"
+  | "meshGradient"
+  | "noiseGrid"
+  | "bauhausPattern";
 ```
 
 ## Generators
@@ -180,6 +185,123 @@ type LayeredPeaksConfig = {
   peakCount?: number;   // default: 8
   roughness?: number;   // default: 0.4
   colors?: string[];    // default: ["#1e293b", "#334155", "#475569", "#64748b", "#94a3b8"]
+};
+```
+
+### generateTopoLines
+
+```typescript
+function generateTopoLines(config: TopoLinesConfig): GeneratorOutput;
+```
+
+**TopoLinesConfig:**
+
+```typescript
+type TopoLinesConfig = {
+  width: number;
+  height: number;
+  seed?: string | number;
+  lineCount?: number;      // default: 12
+  amplitude?: number;      // default: 60
+  frequency?: number;      // default: 0.008
+  noise?: number;          // default: 0.5
+  strokeWidth?: number;    // default: 1.5
+  spacing?: number;        // default: 50
+  colors?: string[];       // default: ["#1e293b", "#38bdf8", "#a78bfa", "#f472b6"]
+  backgroundColor?: string; // default: "#f8fafc"
+};
+```
+
+### generateDotMatrix
+
+```typescript
+function generateDotMatrix(config: DotMatrixConfig): GeneratorOutput;
+```
+
+**DotMatrixConfig:**
+
+```typescript
+type DotMatrixConfig = {
+  width: number;
+  height: number;
+  seed?: string | number;
+  columns?: number;        // default: 16
+  rows?: number;           // default: 12
+  minRadius?: number;      // default: 2
+  maxRadius?: number;      // default: 20
+  jitter?: number;         // default: 0.3
+  density?: number;        // default: 0.85
+  colors?: string[];       // default: ["#0f172a", "#334155", "#64748b", "#94a3b8"]
+  backgroundColor?: string; // default: "#f1f5f9"
+};
+```
+
+### generateMeshGradient
+
+```typescript
+function generateMeshGradient(config: MeshGradientConfig): GeneratorOutput;
+```
+
+**MeshGradientConfig:**
+
+```typescript
+type MeshGradientConfig = {
+  width: number;
+  height: number;
+  seed?: string | number;
+  blobCount?: number;       // default: 6
+  blur?: number;            // default: 50
+  opacity?: number;         // default: 0.7
+  minRadius?: number;       // default: 120
+  maxRadius?: number;       // default: 350
+  colors?: string[];        // default: ["#c084fc", "#818cf8", "#38bdf8", "#2dd4bf", "#f472b6"]
+  backgroundColor?: string;  // default: "#0f172a"
+};
+```
+
+### generateNoiseGrid
+
+```typescript
+function generateNoiseGrid(config: NoiseGridConfig): GeneratorOutput;
+```
+
+**NoiseGridConfig:**
+
+```typescript
+type NoiseGridConfig = {
+  width: number;
+  height: number;
+  seed?: string | number;
+  cellSize?: number;        // default: 30
+  density?: number;         // default: 0.6
+  shapeSize?: number;       // default: 0.7
+  jitter?: number;          // default: 0.4
+  strokeWidth?: number;     // default: 1.5
+  colors?: string[];        // default: ["#1e293b", "#475569", "#94a3b8", "#cbd5e1"]
+  backgroundColor?: string;  // default: "#f8fafc"
+};
+```
+
+### generateBauhausPattern
+
+```typescript
+function generateBauhausPattern(config: BauhausPatternConfig): GeneratorOutput;
+```
+
+**BauhausPatternConfig:**
+
+```typescript
+type BauhausPatternConfig = {
+  width: number;
+  height: number;
+  seed?: string | number;
+  shapeCount?: number;      // default: 18
+  minSize?: number;         // default: 30
+  maxSize?: number;         // default: 180
+  strokeWidth?: number;     // default: 3
+  colors?: string[];        // default: ["#dc2626", "#2563eb", "#f59e0b", "#1f2937", "#f3f4f6"]
+  backgroundColor?: string;  // default: "#fef3c7"
+  allowStrokeOnly?: boolean; // default: true
 };
 ```
 

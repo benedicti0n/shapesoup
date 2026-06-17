@@ -26,7 +26,12 @@ export type GeneratorType =
   | "layeredWaves"
   | "stackedWaves"
   | "lowPolyGrid"
-  | "layeredPeaks";
+  | "layeredPeaks"
+  | "topoLines"
+  | "dotMatrix"
+  | "meshGradient"
+  | "noiseGrid"
+  | "bauhausPattern";
 
 export type { RandomFn, SeededRandom } from "./random";
 export type { Point } from "./path";

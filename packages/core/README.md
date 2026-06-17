@@ -45,6 +45,36 @@ const result = generateBlobScene({
 });
 ```
 
+## Topographic Lines Example
+
+```typescript
+import { generateTopoLines } from "@shapesoup/core";
+
+const result = generateTopoLines({
+  width: 1200,
+  height: 800,
+  seed: "mountain-map",
+  lineCount: 15,
+  amplitude: 70,
+  frequency: 0.01,
+  colors: ["#0f172a", "#38bdf8", "#a78bfa"],
+});
+```
+
+## Bauhaus Pattern Example
+
+```typescript
+import { generateBauhausPattern } from "@shapesoup/core";
+
+const result = generateBauhausPattern({
+  width: 800,
+  height: 800,
+  seed: "poster-01",
+  shapeCount: 20,
+  colors: ["#dc2626", "#2563eb", "#f59e0b", "#1f2937"],
+});
+```
+
 ## Generic Generator
 
 ```typescript
@@ -76,5 +106,10 @@ All generators are pure functions. The same `config` + `seed` always produces th
 - `generateBlobScene`
 - `generateLowPolyGrid`
 - `generateLayeredPeaks`
+- `generateTopoLines`
+- `generateDotMatrix`
+- `generateMeshGradient`
+- `generateNoiseGrid`
+- `generateBauhausPattern`
 
 See `API.md` for full config documentation.
