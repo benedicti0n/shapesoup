@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, Suspense } from "react";
+import Image from "next/image";
 import { GeneratorSelector } from "@/components/playground/generatorSelector";
 import { LivePreview } from "@/components/playground/livePreview";
 import { ControlsSidebar } from "@/components/playground/controlsSidebar";
 import { ActionBar } from "@/components/playground/actionBar";
 import { UrlSync } from "@/components/playground/urlSync";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Menu01Icon, Settings02Icon, PencilEdit01Icon } from "@hugeicons/core-free-icons";
+import { Menu01Icon, Settings02Icon } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 
 export default function PlaygroundPage() {
@@ -34,7 +35,14 @@ export default function PlaygroundPage() {
             <HugeiconsIcon icon={Menu01Icon} size={20} strokeWidth={2.5} />
           </button>
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <HugeiconsIcon icon={PencilEdit01Icon} size={28} strokeWidth={2.5} className="text-accent" />
+            <Image
+              src="/shapesoup-logo.png"
+              alt="ShapeSoup"
+              width={28}
+              height={28}
+              className="rounded-sm"
+              style={{ transform: "rotate(-2deg)" }}
+            />
             <h1
               className="text-2xl md:text-3xl font-bold tracking-tight font-heading"
               style={{ transform: "rotate(-1deg)" }}

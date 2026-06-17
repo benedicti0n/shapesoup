@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { PencilEdit01Icon } from "@hugeicons/core-free-icons";
+import Image from "next/image";
 import { DashedLine } from "@/components/landing/sketchPrimitives";
 
 export function DocsFooter() {
@@ -9,7 +8,14 @@ export function DocsFooter() {
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <Link href="/" className="flex items-center gap-2 group">
-            <HugeiconsIcon icon={PencilEdit01Icon} size={18} strokeWidth={2.5} className="text-accent" />
+            <Image
+              src="/shapesoup-logo.png"
+              alt="ShapeSoup"
+              width={20}
+              height={20}
+              className="rounded-sm"
+              style={{ transform: "rotate(-2deg)" }}
+            />
             <span className="text-base font-bold font-heading text-pencil group-hover:text-accent transition-colors">ShapeSoup</span>
           </Link>
           <div className="flex flex-wrap gap-4">

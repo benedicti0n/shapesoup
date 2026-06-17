@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { PencilEdit01Icon } from "@hugeicons/core-free-icons";
+import Image from "next/image";
 import { SketchButton } from "./sketchPrimitives";
 
 const navLinks = [
@@ -19,7 +18,14 @@ export function LandingHeader() {
     >
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <HugeiconsIcon icon={PencilEdit01Icon} size={24} strokeWidth={2.5} className="text-accent" />
+          <Image
+            src="/shapesoup-logo.png"
+            alt="ShapeSoup"
+            width={32}
+            height={32}
+            className="rounded-sm"
+            style={{ transform: "rotate(-2deg)" }}
+          />
           <span
             className="text-xl md:text-2xl font-bold font-heading text-pencil group-hover:text-accent transition-colors"
             style={{ transform: "rotate(-1deg)" }}

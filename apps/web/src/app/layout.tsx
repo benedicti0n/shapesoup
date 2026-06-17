@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   description:
     "A seed-based SVG generative pattern engine. Beautiful, deterministic, scalable backgrounds from a config + seed.",
   metadataBase: new URL("https://shapesoup.vercel.app"),
+  icons: {
+    icon: "/shapesoup-logo.png",
+    apple: "/shapesoup-logo.png",
+  },
   openGraph: {
     title: "ShapeSoup — SVG Pattern Engine",
     description:
@@ -27,12 +31,19 @@ export const metadata: Metadata = {
     siteName: "ShapeSoup",
     locale: "en_US",
     type: "website",
+    images: [{
+      url: "/shapesoup-logo.png",
+      width: 1200,
+      height: 630,
+      alt: "ShapeSoup — SVG Pattern Engine",
+    }],
   },
   twitter: {
     card: "summary_large_image",
     title: "ShapeSoup — SVG Pattern Engine",
     description:
       "A seed-based SVG generative pattern engine. Beautiful, deterministic, scalable backgrounds from a config + seed.",
+    images: ["/shapesoup-logo.png"],
   },
 };
 
