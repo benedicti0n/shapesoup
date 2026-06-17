@@ -86,7 +86,7 @@ const rotations = [-1, 0.5, -0.5, 1, -1.5, 0.5, -0.5, 1.5, -1, 0.5];
 
 export function GeneratorShowcase() {
   const svgs = generators.map((gen) =>
-    gen.generate({ width: 300, height: 200, seed: gen.seed }).svg
+    gen.generate({ width: 300, height: 200, seed: gen.seed }).svg.replace("<svg", '<svg style="width:100%;height:auto;display:block"')
   );
 
   return (

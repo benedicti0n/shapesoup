@@ -34,21 +34,23 @@ const rotations = [-1.5, 1, -0.5, 1.5, -1, 0.5];
 
 function generateDemoSvg(generator: string, seed: string) {
   const config = { width: 320, height: 220, seed };
+  let raw: string;
   switch (generator) {
-    case "Blob": return generateBlob(config).svg;
-    case "Wave": return generateWave(config).svg;
-    case "Blob Scene": return generateBlobScene(config).svg;
-    case "Layered Waves": return generateLayeredWaves(config).svg;
-    case "Low Poly Grid": return generateLowPolyGrid(config).svg;
-    case "Layered Peaks": return generateLayeredPeaks(config).svg;
-    case "Blurry Gradient": return generateBlurryGradient(config).svg;
-    case "Topographic Lines": return generateTopoLines(config).svg;
-    case "Dot Matrix": return generateDotMatrix(config).svg;
-    case "Mesh Gradient": return generateMeshGradient(config).svg;
-    case "Noise Grid": return generateNoiseGrid(config).svg;
-    case "Bauhaus Pattern": return generateBauhausPattern(config).svg;
-    default: return generateBlobScene(config).svg;
+    case "Blob": raw = generateBlob(config).svg; break;
+    case "Wave": raw = generateWave(config).svg; break;
+    case "Blob Scene": raw = generateBlobScene(config).svg; break;
+    case "Layered Waves": raw = generateLayeredWaves(config).svg; break;
+    case "Low Poly Grid": raw = generateLowPolyGrid(config).svg; break;
+    case "Layered Peaks": raw = generateLayeredPeaks(config).svg; break;
+    case "Blurry Gradient": raw = generateBlurryGradient(config).svg; break;
+    case "Topographic Lines": raw = generateTopoLines(config).svg; break;
+    case "Dot Matrix": raw = generateDotMatrix(config).svg; break;
+    case "Mesh Gradient": raw = generateMeshGradient(config).svg; break;
+    case "Noise Grid": raw = generateNoiseGrid(config).svg; break;
+    case "Bauhaus Pattern": raw = generateBauhausPattern(config).svg; break;
+    default: raw = generateBlobScene(config).svg; break;
   }
+  return raw.replace("<svg", '<svg style="width:100%;height:auto;display:block"');
 }
 
 export function InteractivePatternDemo() {

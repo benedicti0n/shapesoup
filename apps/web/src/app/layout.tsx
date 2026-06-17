@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
     images: [{
-      url: "/shapesoup-logo.svg",
+      url: "/metaThumbnail.png",
       width: 1200,
       height: 630,
       alt: "ShapeSoup — SVG Pattern Engine",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "ShapeSoup — SVG Pattern Engine",
     description:
       "A seed-based SVG generative pattern engine. Beautiful, deterministic, scalable backgrounds from a config + seed.",
-    images: ["/shapesoup-logo.svg"],
+    images: ["/metaThumbnail.png"],
   },
 };
 

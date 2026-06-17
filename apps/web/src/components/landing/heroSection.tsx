@@ -41,7 +41,10 @@ export function HeroSection() {
 
   const active = heroSeeds[activeIndex];
 
-  const svg = useMemo(() => generateHeroSvg(active.generator, currentSeed), [active.generator, currentSeed]);
+  const svg = useMemo(() => {
+    const raw = generateHeroSvg(active.generator, currentSeed);
+    return raw.replace("<svg", '<svg style="width:100%;height:auto;display:block"');
+  }, [active.generator, currentSeed]);
 
   const randomize = () => {
     const newSeed = Math.random().toString(36).substring(2, 10);

@@ -11,7 +11,7 @@ import { LandingFooter } from "./landingFooter";
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-paper text-pencil">
+    <div className="min-h-screen bg-paper text-pencil overflow-x-hidden">
       <LandingHeader />
       <main>
         <HeroSection />
