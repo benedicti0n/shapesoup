@@ -36,7 +36,7 @@ export default function PlaygroundPage() {
         </aside>
 
         {/* Center workspace */}
-        <section className="flex-1 flex flex-col overflow-y-auto">
+        <section className="flex-1 flex flex-col overflow-y-auto min-w-0">
           {/* Mobile: generator picker button */}
           <div className="md:hidden px-4 pt-3 pb-1">
             <MobileGeneratorPicker onOpen={() => setShowGeneratorSheet(true)} />
