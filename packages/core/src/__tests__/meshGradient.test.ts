@@ -33,18 +33,29 @@ describe("generateMeshGradient", () => {
     const result = generateMeshGradient(config);
     expect(result.svg).toContain("<svg");
     expect(result.svg).toContain("</svg>");
-  });
-
-  it("contains filter, blur, or opacity", () => {
-    const result = generateMeshGradient(config);
-    expect(result.svg).toContain("<filter");
-    expect(result.svg).toContain("feGaussianBlur");
-    expect(result.svg).toContain("fill-opacity");
+    expect(result.svg).toContain('xmlns="http://www.w3.org/2000/svg"');
   });
 
   it("returns a valid data uri", () => {
     const result = generateMeshGradient(config);
     expect(result.dataUri).toMatch(/^data:image\/svg\+xml,/);
+  });
+
+  it("contains radialGradient definitions", () => {
+    const result = generateMeshGradient(config);
+    expect(result.svg).toContain("radialGradient");
+  });
+
+  it("contains a base linearGradient background", () => {
+    const result = generateMeshGradient(config);
+    expect(result.svg).toContain("linearGradient");
+  });
+
+  it("contains multiple gradient layers (rects with url fills)", () => {
+    const result = generateMeshGradient(config);
+    const urlFills = result.svg.match(/fill="url\(#/g);
+    expect(urlFills).toBeTruthy();
+    expect(urlFills!.length).toBeGreaterThanOrEqual(3);
   });
 
   it("metadata includes required fields", () => {
@@ -54,5 +65,12 @@ describe("generateMeshGradient", () => {
     expect(result.metadata.width).toBe(800);
     expect(result.metadata.height).toBe(600);
     expect(result.metadata.elements).toBeGreaterThan(1);
+  });
+
+  it("config clamping still works", () => {
+    const clampedConfig = { width: 400, height: 300, seed: "clamp", blobCount: 20, opacity: 2, minRadius: -10, maxRadius: 0 };
+    const result = generateMeshGradient(clampedConfig);
+    expect(result.svg).toContain("<svg");
+    expect(result.svg).toContain("radialGradient");
   });
 });

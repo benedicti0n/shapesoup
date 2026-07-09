@@ -5,4 +5,6 @@ export type BlurryGradientConfig = {
   blobCount?: number;
   blurAmount?: number;
   colors?: string[];
+  backgroundColor?: string;
+  grain?: boolean;
 };
